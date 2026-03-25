@@ -4,6 +4,10 @@ import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import {
+  loadWahlprogramme,
+  buildWahlprogrammContext,
+} from "./wahlprogramme.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,10 +56,28 @@ if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === "dein-api-key-hier-eintragen") {
   process.exit(1);
 }
 
-// ─── System Prompt ───────────────────────────────────────
-const SYSTEM_PROMPT = `Du bist ein hochpräziser politischer Analyst für Deutschland. Du kennst alle aktuellen Wahlprogramme der deutschen Parteien für die Bundestagswahl 2025 sehr genau und kannst die Positionen differenziert einordnen.
+// ─── Wahlprogramme laden ─────────────────────────────────
+let wahlprogrammContext = "";
 
-Deine Aufgabe: Analysiere die Antworten eines Nutzers auf 30 politische Fragen und vergleiche sie gründlich mit den tatsächlichen Positionen der folgenden Parteien: CDU/CSU, SPD, Bündnis 90/Die Grünen, FDP, AfD, Die Linke, BSW, Volt, Freie Wähler.
+(async () => {
+  try {
+    const programTexts = await loadWahlprogramme();
+    wahlprogrammContext = buildWahlprogrammContext(programTexts);
+    console.log(
+      `📊 Wahlprogramm-Kontext: ${wahlprogrammContext.length} Zeichen bereit\n`
+    );
+  } catch (err) {
+    console.error("⚠️  Wahlprogramme konnten nicht geladen werden:", err.message);
+    console.error("   → Analyse nutzt nur KI-Trainingswissen als Fallback\n");
+  }
+})();
+
+// ─── System Prompt ───────────────────────────────────────
+const SYSTEM_PROMPT = `Du bist ein hochpräziser politischer Analyst für Deutschland. Du hast Zugriff auf die offiziellen Wahlprogramme der deutschen Parteien für die Bundestagswahl 2025 und analysierst diese sorgfältig.
+
+Deine Aufgabe: Analysiere die Antworten eines Nutzers auf 30 politische Fragen und vergleiche sie gründlich mit den tatsächlichen Positionen der folgenden Parteien: CDU/CSU, SPD, Bündnis 90/Die Grünen, FDP, AfD, Die Linke, BSW, Freie Wähler, Die PARTEI.
+
+WICHTIG: Dir werden die offiziellen Wahlprogrammtexte der Parteien als Kontext mitgeliefert. Nutze diese als PRIMÄRE QUELLE für den Vergleich. Beziehe dich auf konkrete Positionen und Formulierungen aus den Wahlprogrammen. Falls für eine Partei kein Wahlprogramm-Text vorliegt (z.B. Die PARTEI als Satirepartei), nutze dein Trainingswissen.
 
 Für JEDE Frage-Antwort-Kombination:
 1. Identifiziere die Kernposition des Nutzers — was genau fordert er/sie?
@@ -74,20 +96,20 @@ WICHTIG: Antworte NUR mit einem validen JSON-Objekt im folgenden Format. KEIN Ma
     "AfD": { "score": 0, "reasoning": "" },
     "Die Linke": { "score": 0, "reasoning": "" },
     "BSW": { "score": 0, "reasoning": "" },
-    "Volt": { "score": 0, "reasoning": "" },
-    "Freie Wähler": { "score": 0, "reasoning": "" }
+    "Freie Wähler": { "score": 0, "reasoning": "" },
+    "Die PARTEI": { "score": 0, "reasoning": "" }
   },
   "topicBreakdown": [
     {
       "topic": "Themenname",
       "questionId": 1,
-      "scores": { "CDU/CSU": 0, "SPD": 0, "Bündnis 90/Die Grünen": 0, "FDP": 0, "AfD": 0, "Die Linke": 0, "BSW": 0, "Volt": 0, "Freie Wähler": 0 }
+      "scores": { "CDU/CSU": 0, "SPD": 0, "Bündnis 90/Die Grünen": 0, "FDP": 0, "AfD": 0, "Die Linke": 0, "BSW": 0, "Freie Wähler": 0, "Die PARTEI": 0 }
     }
   ]
 }
 
 "score" in "partyScores" = gewichteter Gesamtscore (0-100).
-"reasoning" = kurze deutsche Begründung (2-3 Sätze), warum der Nutzer zu dieser Partei passt oder nicht.
+"reasoning" = kurze deutsche Begründung (2-3 Sätze), warum der Nutzer zu dieser Partei passt oder nicht. Beziehe dich dabei auf konkrete Programmpunkte.
 "topicBreakdown" = Übereinstimmungsscore (0-100) pro Partei für JEDE einzelne der 30 Fragen.`;
 
 // ─── Analysis endpoint ───────────────────────────────────
@@ -111,6 +133,11 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
       `[${new Date().toISOString()}] Analyse gestartet (${answers.length} Zeichen)`
     );
 
+    // Build the user message with Wahlprogramm context
+    const userMessage = wahlprogrammContext
+      ? wahlprogrammContext + "\n\n" + answers
+      : answers;
+
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -119,10 +146,10 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-haiku-4-5-20251001",
         max_tokens: 8000,
         system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: answers }],
+        messages: [{ role: "user", content: userMessage }],
       }),
     });
 
@@ -201,6 +228,7 @@ if (process.env.NODE_ENV === "production") {
 // ─── Start ───────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n🗳️  WahlAI Server läuft auf http://localhost:${PORT}`);
+  console.log(`   Modell: Claude 4.5 Haiku (claude-haiku-4-5-20251001)`);
   console.log(`   Umgebung: ${process.env.NODE_ENV || "development"}`);
   console.log(`   API-Key: ${ANTHROPIC_API_KEY.slice(0, 10)}...`);
   console.log("");

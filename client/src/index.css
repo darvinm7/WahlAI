@@ -1,34 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg: #0C0C0F;
-  --bg-card: #16161A;
-  --bg-bar: #1E1E24;
-  --border: #2A2A32;
-  --text: #EAEAEC;
-  --text-mid: #9A9AA5;
-  --text-dim: #5E5E6E;
-  --accent: #4F46E5;
-  --accent-alt: #818CF8;
-  --accent-dim: #4F46E580;
-  --accent-bg: #4F46E518;
-  --danger: #EF4444;
-  --success: #22C55E;
+  --bg: #F0F2F5;
+  --bg-card: #FFFFFF;
+  --bg-bar: #E4E7EC;
+  --border: #D0D5DD;
+  --text: #101828;
+  --text-mid: #475467;
+  --text-dim: #98A2B3;
+  --accent: #003056;
+  --accent-alt: #0066B3;
+  --accent-light: #E8F0FE;
+  --accent-dim: #003056AA;
+  --accent-bg: #00305610;
+  --danger: #D92D20;
+  --success: #039855;
+  --wom-blue: #003056;
+  --wom-red: #C4122F;
+  --wom-green: #0A8F3C;
+  --wom-light-blue: #E8F4FD;
+  --wom-orange: #E87D0D;
+  --info-bg: #EEF4FF;
+  --info-border: #B2CCFF;
+  --info-text: #1849A9;
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 40px rgba(16, 24, 40, 0.12);
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #F5F4F0;
-    --bg-card: #FFFFFF;
-    --bg-bar: #E8E7E3;
-    --border: #D4D3CF;
-    --text: #1A1A1E;
-    --text-mid: #5A5A65;
-    --text-dim: #8A8A95;
-    --accent: #4338CA;
-    --accent-alt: #6366F1;
-    --accent-dim: #4338CA60;
-    --accent-bg: #4338CA12;
-    --danger: #DC2626;
-    --success: #16A34A;
+    --bg: #0C0F14;
+    --bg-card: #161B26;
+    --bg-bar: #1F242F;
+    --border: #2B3140;
+    --text: #F5F5F6;
+    --text-mid: #B0B7C3;
+    --text-dim: #6B7280;
+    --accent: #4DA3E8;
+    --accent-alt: #7CC4FA;
+    --accent-light: #1A2840;
+    --accent-dim: #4DA3E880;
+    --accent-bg: #4DA3E818;
+    --danger: #F04438;
+    --success: #17B26A;
+    --wom-blue: #4DA3E8;
+    --wom-red: #F04438;
+    --wom-green: #17B26A;
+    --wom-light-blue: #1A2840;
+    --wom-orange: #F79009;
+    --info-bg: #1A2840;
+    --info-border: #2B4A7A;
+    --info-text: #7CC4FA;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -46,7 +72,7 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   min-height: 100vh;
   line-height: 1.6;
 }
@@ -64,35 +90,35 @@ textarea::placeholder {
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  height: 6px;
+  height: 8px;
   background: var(--bg-bar);
-  border-radius: 3px;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
-  border: 3px solid var(--bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  border: 3px solid var(--bg-card);
+  box-shadow: var(--shadow-sm);
   transition: transform 0.15s ease;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
 }
 input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
-  border: 3px solid var(--bg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  border: 3px solid var(--bg-card);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Animations */
@@ -100,16 +126,19 @@ input[type="range"]::-moz-range-thumb {
   to { transform: rotate(360deg); }
 }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(30px); }
+  from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
 }
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
+}
+@keyframes barFill {
+  from { width: 0; }
 }
 
 /* Scrollbar */
