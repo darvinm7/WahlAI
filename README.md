@@ -43,7 +43,7 @@ wahlai/
 1. Der Nutzer beantwortet 30 Fragen im Browser (React Frontend)
 2. Das Frontend sendet die Antworten an das Express-Backend (`/api/analyze`)
 3. Das Backend fügt den sicheren API-Key hinzu und leitet die Anfrage an die Anthropic API weiter
-4. Claude Sonnet 4 analysiert die Antworten und vergleicht sie mit den Wahlprogrammen
+4. Claude Sonnet 4.6 analysiert die Antworten und vergleicht sie mit den Wahlprogrammen
 5. Das Ergebnis wird als JSON zurückgegeben und im Frontend als Ranking dargestellt
 
 Der API-Key verlässt **niemals** den Server und ist **nicht** im Frontend-Code enthalten.
