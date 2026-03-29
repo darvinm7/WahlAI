@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 
 const REGIONS = [
-  { id: "bundesweit", name: "Bundesweit", emoji: "\uD83C\uDDE9\uD83C\uDDEA", desc: "Alle 30 Fragen zu bundesweiten Themen" },
-  { id: "bw", name: "Baden-W\u00fcrttemberg", emoji: "\uD83C\uDFF0", desc: "Automobilindustrie, Bildung, Innovation" },
-  { id: "by", name: "Bayern", emoji: "\u26F0\uFE0F", desc: "Wirtschaft, Tradition, Technologie" },
-  { id: "be", name: "Berlin", emoji: "\uD83C\uDFDB\uFE0F", desc: "Mieten, Mobilit\u00e4t, Verwaltung" },
-  { id: "bb", name: "Brandenburg", emoji: "\uD83C\uDF33", desc: "Strukturwandel, Tesla, l\u00e4ndlicher Raum" },
-  { id: "hb", name: "Bremen", emoji: "\u2693", desc: "Hafen, Bildung, Stadtentwicklung" },
-  { id: "hh", name: "Hamburg", emoji: "\u2693", desc: "Hafen, Wohnen, Verkehr" },
-  { id: "he", name: "Hessen", emoji: "\uD83C\uDFE6", desc: "Finanzplatz, Mobilit\u00e4t, Sicherheit" },
-  { id: "mv", name: "Mecklenburg-Vorpommern", emoji: "\uD83C\uDF0A", desc: "Tourismus, Abwanderung, Energie" },
-  { id: "ni", name: "Niedersachsen", emoji: "\uD83D\uDE9C", desc: "Landwirtschaft, VW, K\u00fcste" },
-  { id: "nw", name: "Nordrhein-Westfalen", emoji: "\u2692\uFE0F", desc: "Strukturwandel, Rheinland, Ruhrgebiet" },
-  { id: "rp", name: "Rheinland-Pfalz", emoji: "\uD83C\uDF47", desc: "Weinbau, US-Milit\u00e4r, Ahrtal" },
-  { id: "sl", name: "Saarland", emoji: "\uD83C\uDFED", desc: "Stahlindustrie, Grenzregion, Strukturwandel" },
-  { id: "sn", name: "Sachsen", emoji: "\uD83D\uDD27", desc: "Chipindustrie, Rechtsextremismus, Kohle" },
-  { id: "st", name: "Sachsen-Anhalt", emoji: "\u26EA", desc: "Chemie, Abwanderung, Infrastruktur" },
-  { id: "sh", name: "Schleswig-Holstein", emoji: "\uD83C\uDF0A", desc: "Windenergie, Tourismus, D\u00e4nische Minderheit" },
-  { id: "th", name: "Th\u00fcringen", emoji: "\uD83C\uDFF0", desc: "Politische Lage, Industrie, l\u00e4ndlicher Raum" },
+  { id: "bundesweit", name: "Bundesweit", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Coat_of_arms_of_Germany.svg/100px-Coat_of_arms_of_Germany.svg.png", desc: "Alle 30 Fragen zu bundesweiten Themen" },
+  { id: "bw", name: "Baden-W\u00fcrttemberg", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lesser_coat_of_arms_of_Baden-W%C3%BCrttemberg.svg/100px-Lesser_coat_of_arms_of_Baden-W%C3%BCrttemberg.svg.png", desc: "Automobilindustrie, Bildung, Innovation" },
+  { id: "by", name: "Bayern", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Bayern_Wappen.svg/100px-Bayern_Wappen.svg.png", desc: "Wirtschaft, Tradition, Technologie" },
+  { id: "be", name: "Berlin", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/DEU_Berlin_COA.svg/100px-DEU_Berlin_COA.svg.png", desc: "Mieten, Mobilit\u00e4t, Verwaltung" },
+  { id: "bb", name: "Brandenburg", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/DEU_Brandenburg_COA.svg/100px-DEU_Brandenburg_COA.svg.png", desc: "Strukturwandel, Tesla, l\u00e4ndlicher Raum" },
+  { id: "hb", name: "Bremen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Bremen_Wappen%28Mittel%29.svg/100px-Bremen_Wappen%28Mittel%29.svg.png", desc: "Hafen, Bildung, Stadtentwicklung" },
+  { id: "hh", name: "Hamburg", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/DEU_Hamburg_COA.svg/100px-DEU_Hamburg_COA.svg.png", desc: "Hafen, Wohnen, Verkehr" },
+  { id: "he", name: "Hessen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Coat_of_arms_of_Hesse.svg/100px-Coat_of_arms_of_Hesse.svg.png", desc: "Finanzplatz, Mobilit\u00e4t, Sicherheit" },
+  { id: "mv", name: "Mecklenburg-Vorpommern", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Coat_of_arms_of_Mecklenburg-Western_Pomerania_%28great%29.svg/100px-Coat_of_arms_of_Mecklenburg-Western_Pomerania_%28great%29.svg.png", desc: "Tourismus, Abwanderung, Energie" },
+  { id: "ni", name: "Niedersachsen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Coat_of_arms_of_Lower_Saxony.svg/100px-Coat_of_arms_of_Lower_Saxony.svg.png", desc: "Landwirtschaft, VW, K\u00fcste" },
+  { id: "nw", name: "Nordrhein-Westfalen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Coat_of_arms_of_North_Rhine-Westphalia.svg/100px-Coat_of_arms_of_North_Rhine-Westphalia.svg.png", desc: "Strukturwandel, Rheinland, Ruhrgebiet" },
+  { id: "rp", name: "Rheinland-Pfalz", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Coat_of_arms_of_Rhineland-Palatinate.svg/100px-Coat_of_arms_of_Rhineland-Palatinate.svg.png", desc: "Weinbau, US-Milit\u00e4r, Ahrtal" },
+  { id: "sl", name: "Saarland", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wappen_des_Saarlands.svg/100px-Wappen_des_Saarlands.svg.png", desc: "Stahlindustrie, Grenzregion, Strukturwandel" },
+  { id: "sn", name: "Sachsen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Coat_of_arms_of_Saxony.svg/100px-Coat_of_arms_of_Saxony.svg.png", desc: "Chipindustrie, Rechtsextremismus, Kohle" },
+  { id: "st", name: "Sachsen-Anhalt", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Wappen_Sachsen-Anhalt.svg/100px-Wappen_Sachsen-Anhalt.svg.png", desc: "Chemie, Abwanderung, Infrastruktur" },
+  { id: "sh", name: "Schleswig-Holstein", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/DEU_Schleswig-Holstein_COA.svg/100px-DEU_Schleswig-Holstein_COA.svg.png", desc: "Windenergie, Tourismus, D\u00e4nische Minderheit" },
+  { id: "th", name: "Th\u00fcringen", wappen: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Coat_of_arms_of_Thuringia.svg/100px-Coat_of_arms_of_Thuringia.svg.png", desc: "Politische Lage, Industrie, l\u00e4ndlicher Raum" },
 ];
 
 export default function RegionSelectPage({ onSelect }) {
@@ -151,8 +151,17 @@ export default function RegionSelectPage({ onSelect }) {
                   gridColumn: isBund ? "1 / -1" : "auto",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: isBund ? 22 : 18 }}>{region.emoji}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <img
+                    src={region.wappen}
+                    alt={region.name}
+                    style={{
+                      width: isBund ? 36 : 30,
+                      height: isBund ? 36 : 30,
+                      objectFit: "contain",
+                      flexShrink: 0,
+                    }}
+                  />
                   <span
                     style={{
                       fontSize: isBund ? 16 : 14,
