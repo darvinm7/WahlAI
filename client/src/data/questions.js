@@ -4,6 +4,8 @@ const QUESTIONS = [
     topic: "Migration & Asyl",
     question:
       "Wie sollte Deutschland mit Flucht und Migration umgehen? Sollten die Grenzen stärker kontrolliert, Asylverfahren verschärft oder die Integration ausgebaut werden?",
+    statement:
+      "Deutschland sollte die Zuwanderung stärker begrenzen und Asylverfahren deutlich verschärfen.",
     infoFacts: [
       "2024 wurden in Deutschland rund 230.000 Erstanträge auf Asyl gestellt.",
       "Die fünf häufigsten Herkunftsländer sind Syrien, Afghanistan, Türkei, Irak und Kolumbien.",
@@ -15,6 +17,8 @@ const QUESTIONS = [
     topic: "Klimaschutz",
     question:
       "Welche konkreten Maßnahmen sollte Deutschland gegen den Klimawandel ergreifen? Wie weit dürfen Verbote und CO₂-Bepreisung gehen, und wer soll die Kosten tragen?",
+    statement:
+      "Der Klimaschutz sollte Vorrang vor wirtschaftlichen Interessen haben, auch wenn das Verbote und höhere Kosten bedeutet.",
     infoFacts: [
       "Deutschland hat sich verpflichtet, bis 2045 klimaneutral zu werden.",
       "Der CO₂-Preis liegt 2025 bei 55 Euro pro Tonne und soll weiter steigen.",
@@ -26,6 +30,8 @@ const QUESTIONS = [
     topic: "Wirtschaft & Standort",
     question:
       "Deutschland verliert als Wirtschaftsstandort an Wettbewerbsfähigkeit. Was sollte getan werden — Steuersenkungen, weniger Bürokratie, mehr Subventionen oder stärkere Arbeitnehmerrechte?",
+    statement:
+      "Unternehmen sollten durch Steuersenkungen und weniger Regulierung entlastet werden, um den Wirtschaftsstandort zu stärken.",
     infoFacts: [
       "Deutschland rutschte 2023/24 in eine Rezession — das BIP schrumpfte real.",
       "Die Unternehmenssteuerlast liegt in Deutschland bei ca. 30 % und ist damit eine der höchsten in der EU.",
@@ -37,6 +43,8 @@ const QUESTIONS = [
     topic: "Bürgergeld & Sozialstaat",
     question:
       "Wie sollte das Bürgergeld gestaltet sein? Braucht es höhere Sätze und weniger Sanktionen — oder strengere Auflagen und mehr Anreize zur Arbeitsaufnahme?",
+    statement:
+      "Beim Bürgergeld sollten strengere Sanktionen und Auflagen gelten, um mehr Anreize zur Arbeitsaufnahme zu schaffen.",
     infoFacts: [
       "Rund 5,5 Millionen Menschen beziehen Bürgergeld (Stand 2024).",
       "Der Regelsatz für Alleinstehende beträgt 563 Euro monatlich (2025).",
@@ -48,6 +56,8 @@ const QUESTIONS = [
     topic: "Rente",
     question:
       "Die Rente wird immer teurer. Sollte das Renteneintrittsalter steigen, die Beiträge erhöht werden oder braucht es ein ganz neues Modell wie eine Aktienrente?",
+    statement:
+      "Das Renteneintrittsalter sollte angehoben werden, um das Rentensystem langfristig finanzierbar zu halten.",
     infoFacts: [
       "Das reguläre Renteneintrittsalter steigt schrittweise auf 67 Jahre bis 2031.",
       "Der Beitragssatz zur Rentenversicherung liegt bei 18,6 % des Bruttolohns.",
@@ -59,6 +69,8 @@ const QUESTIONS = [
     topic: "Wohnen & Mieten",
     question:
       "Mieten explodieren in vielen Städten. Ist die Lösung mehr Neubau, strengere Mietpreisbremsen, sozialer Wohnungsbau oder sogar Enteignung großer Wohnungskonzerne?",
+    statement:
+      "Der Staat sollte stärker in den Wohnungsmarkt eingreifen, etwa durch Mietpreisbremsen und Enteignung großer Wohnungskonzerne.",
     infoFacts: [
       "In Deutschland fehlen schätzungsweise 700.000 bis 800.000 Wohnungen.",
       "Die Mietpreisbremse wurde bis 2029 verlängert.",
@@ -70,6 +82,8 @@ const QUESTIONS = [
     topic: "Verteidigung & Bundeswehr",
     question:
       "Sollte Deutschland dauerhaft deutlich mehr Geld für die Bundeswehr ausgeben? Brauchen wir eine neue Wehrpflicht oder einen Wehrdienst angesichts der veränderten Sicherheitslage in Europa?",
+    statement:
+      "Deutschland sollte dauerhaft deutlich mehr als 2 % des BIP für Verteidigung ausgeben und einen verpflichtenden Wehrdienst wieder einführen.",
     infoFacts: [
       "Das Sondervermögen von 100 Mrd. Euro für die Bundeswehr ist größtenteils bereits verplant.",
       "Deutschland erreichte 2024 erstmals das NATO-Ziel von 2 % des BIP für Verteidigung.",
@@ -81,6 +95,8 @@ const QUESTIONS = [
     topic: "Ukraine & Russland",
     question:
       "Wie sollte Deutschland sich zum Krieg in der Ukraine positionieren? Mehr Waffenlieferungen, diplomatische Lösungen, oder sollte Deutschland eine andere Rolle einnehmen?",
+    statement:
+      "Deutschland sollte die Ukraine weiterhin mit schweren Waffen unterstützen und die Sanktionen gegen Russland verschärfen.",
     infoFacts: [
       "Deutschland ist nach den USA der zweitgrößte Unterstützer der Ukraine.",
       "Seit Kriegsbeginn hat Deutschland über 28 Mrd. Euro an Hilfen zugesagt.",
@@ -92,6 +108,8 @@ const QUESTIONS = [
     topic: "Energie & Strompreise",
     question:
       "Wie soll Deutschlands Energieversorgung aussehen? Welche Rolle spielen erneuerbare Energien, und sollte Deutschland über eine Rückkehr zur Kernkraft nachdenken?",
+    statement:
+      "Deutschland sollte vollständig auf erneuerbare Energien setzen und eine Rückkehr zur Kernkraft ausschließen.",
     infoFacts: [
       "2024 stammten über 55 % des Stroms in Deutschland aus erneuerbaren Energien.",
       "Die letzten drei Kernkraftwerke wurden im April 2023 endgültig abgeschaltet.",
@@ -103,6 +121,8 @@ const QUESTIONS = [
     topic: "Steuern & Abgaben",
     question:
       "Die Steuerlast in Deutschland ist hoch. Sollten Besserverdienende stärker besteuert werden, oder braucht es Steuersenkungen für alle, um die Wirtschaft anzukurbeln?",
+    statement:
+      "Hohe Einkommen und große Vermögen sollten stärker besteuert werden, um öffentliche Investitionen und soziale Gerechtigkeit zu finanzieren.",
     infoFacts: [
       "Die Steuer- und Abgabenquote in Deutschland liegt bei ca. 42 % des BIP.",
       "Der Spitzensteuersatz greift ab einem zu versteuernden Einkommen von ca. 67.000 Euro.",
@@ -114,6 +134,8 @@ const QUESTIONS = [
     topic: "Schuldenbremse",
     question:
       "Sollte die Schuldenbremse gelockert werden, damit der Staat mehr in Infrastruktur und Bildung investieren kann — oder ist Haushaltsdisziplin langfristig wichtiger?",
+    statement:
+      "Die Schuldenbremse sollte gelockert oder abgeschafft werden, damit der Staat mehr in Infrastruktur und Bildung investieren kann.",
     infoFacts: [
       "Die Schuldenbremse ist seit 2009 im Grundgesetz verankert (Art. 109 GG).",
       "Sie erlaubt dem Bund maximal 0,35 % des BIP an struktureller Neuverschuldung.",
@@ -125,6 +147,8 @@ const QUESTIONS = [
     topic: "Bildung",
     question:
       "Das Bildungssystem hat große Probleme: Lehrermangel, marode Schulen, unterschiedliche Qualität je nach Bundesland. Was muss sich ändern und wer soll das verantworten?",
+    statement:
+      "Der Bund sollte mehr Einfluss auf die Bildungspolitik bekommen und einheitliche Standards in allen Bundesländern durchsetzen.",
     infoFacts: [
       "Bis 2035 fehlen laut KMK-Prognose rund 68.000 Lehrkräfte in Deutschland.",
       "Der Bildungsföderalismus führt zu 16 verschiedenen Schulsystemen in den Bundesländern.",
@@ -136,6 +160,8 @@ const QUESTIONS = [
     topic: "Digitalisierung",
     question:
       "Behörden, Schulen und Gesundheitswesen hinken digital hinterher. Was sollte der Staat konkret tun, um die Digitalisierung in Deutschland voranzubringen?",
+    statement:
+      "Die Digitalisierung der Verwaltung und öffentlichen Infrastruktur sollte oberste Priorität haben, auch wenn das hohe Investitionen erfordert.",
     infoFacts: [
       "Im EU-Index für digitale Wirtschaft und Gesellschaft (DESI) liegt Deutschland nur im Mittelfeld.",
       "Nur etwa 50 % der Verwaltungsleistungen sind online verfügbar (OZG-Umsetzung).",
@@ -147,6 +173,8 @@ const QUESTIONS = [
     topic: "Innere Sicherheit",
     question:
       "Wie kann Deutschland sicherer werden? Brauchen wir mehr Polizei, Videoüberwachung, härtere Strafen — oder liegen die Ursachen von Kriminalität woanders?",
+    statement:
+      "Der Staat sollte Videoüberwachung und Polizeibefugnisse ausweiten und härtere Strafen verhängen, um die innere Sicherheit zu stärken.",
     infoFacts: [
       "Die Polizeiliche Kriminalstatistik 2023 verzeichnete einen Anstieg der Straftaten um 5,5 %.",
       "Messerangriffe sind zuletzt stark gestiegen und stehen im Fokus der Debatte.",
@@ -158,6 +186,8 @@ const QUESTIONS = [
     topic: "Gesundheitssystem",
     question:
       "Lange Wartezeiten, Ärztemangel auf dem Land, hohe Kassenbeiträge: Wie sollte das Gesundheitssystem reformiert werden? Bürgerversicherung oder Beibehaltung des dualen Systems?",
+    statement:
+      "Die private Krankenversicherung sollte abgeschafft und durch eine einheitliche Bürgerversicherung für alle ersetzt werden.",
     infoFacts: [
       "Ca. 73 Millionen Deutsche sind gesetzlich krankenversichert, rund 9 Millionen privat.",
       "In ländlichen Regionen fehlen zunehmend Hausärzte — über 5.000 Praxen drohen bis 2030 zu schließen.",
@@ -169,6 +199,8 @@ const QUESTIONS = [
     topic: "Pflege",
     question:
       "Der Pflegenotstand spitzt sich zu. Was hilft — bessere Bezahlung, mehr Fachkräfte aus dem Ausland, Unterstützung pflegender Angehöriger oder technische Lösungen?",
+    statement:
+      "Die Pflegekosten sollten vollständig von der Gemeinschaft getragen werden, anstatt pflegebedürftige Menschen und ihre Familien finanziell zu belasten.",
     infoFacts: [
       "Rund 5 Millionen Menschen in Deutschland sind pflegebedürftig.",
       "Bis 2030 fehlen laut Prognosen bis zu 500.000 Pflegekräfte.",
@@ -180,6 +212,8 @@ const QUESTIONS = [
     topic: "Verkehr & Mobilität",
     question:
       "Tempolimit auf Autobahnen, Ausbau von Bahn und ÖPNV, Förderung von E-Autos oder Technologieoffenheit — wie sollte die Verkehrswende gestaltet werden?",
+    statement:
+      "Es sollte ein generelles Tempolimit auf Autobahnen eingeführt und der öffentliche Nahverkehr massiv ausgebaut werden.",
     infoFacts: [
       "Deutschland ist das einzige Land in Europa ohne generelles Tempolimit auf Autobahnen.",
       "Das Deutschlandticket kostet seit 2025 monatlich 58 Euro.",
@@ -191,6 +225,8 @@ const QUESTIONS = [
     topic: "EU & Europapolitik",
     question:
       "Sollte die europäische Integration vertieft werden — zum Beispiel durch eine gemeinsame Armee oder Fiskalpolitik — oder braucht es mehr nationale Eigenständigkeit?",
+    statement:
+      "Die europäische Integration sollte vertieft werden — auch wenn das weniger nationale Souveränität bedeutet.",
     infoFacts: [
       "Deutschland ist mit ca. 25 % der größte Nettozahler der EU.",
       "Die EU hat 27 Mitgliedstaaten mit rund 450 Millionen Einwohnern.",
@@ -202,6 +238,8 @@ const QUESTIONS = [
     topic: "Handel & Zölle",
     question:
       "Wie sollte Deutschland auf Handelskonflikte und Strafzölle reagieren? Braucht Europa mehr wirtschaftliche Unabhängigkeit oder ist offener Freihandel der bessere Weg?",
+    statement:
+      "Europa sollte wirtschaftlich unabhängiger werden und strategische Industrien durch Zölle und Subventionen schützen.",
     infoFacts: [
       "China, die USA und Frankreich sind Deutschlands wichtigste Handelspartner.",
       "Die USA haben unter Trump Strafzölle auf EU-Produkte eingeführt bzw. angedroht.",
@@ -213,6 +251,8 @@ const QUESTIONS = [
     topic: "Bürokratieabbau",
     question:
       "Deutschland gilt als überreguliert. In welchen Bereichen sollte Bürokratie am dringendsten abgebaut werden und wie radikal darf das sein?",
+    statement:
+      "Bürokratie und Regulierungen sollten radikal abgebaut werden, auch wenn dabei einzelne Schutzstandards gelockert werden müssen.",
     infoFacts: [
       "Die jährlichen Bürokratiekosten für die Wirtschaft werden auf über 65 Mrd. Euro geschätzt.",
       "Ein Bauantrag dauert in Deutschland durchschnittlich 5-8 Monate.",
@@ -224,6 +264,8 @@ const QUESTIONS = [
     topic: "Familienpolitik",
     question:
       "Wie sollte der Staat Familien besser unterstützen? Höheres Kindergeld, kostenlose Kitas, flexiblere Elternzeit — was wäre am wirksamsten?",
+    statement:
+      "Der Staat sollte Familien deutlich stärker finanziell unterstützen und kostenlose Kinderbetreuung für alle garantieren.",
     infoFacts: [
       "Das Kindergeld beträgt seit 2025 einheitlich 255 Euro pro Monat und Kind.",
       "Die Geburtenrate liegt bei etwa 1,35 Kindern pro Frau — weit unter dem Bestandserhaltungsniveau.",
@@ -235,6 +277,8 @@ const QUESTIONS = [
     topic: "Gleichstellung",
     question:
       "Braucht Deutschland gesetzliche Quoten für Frauen in Führungspositionen und Parlamenten, oder sollte Gleichstellung ohne staatliche Vorgaben vorangebracht werden?",
+    statement:
+      "Es braucht gesetzliche Quoten, um Frauen in Führungspositionen und Parlamenten gleichzustellen.",
     infoFacts: [
       "Der Gender Pay Gap liegt in Deutschland bei rund 18 % (unbereinigt).",
       "Der Frauenanteil im Bundestag beträgt ca. 35 %.",
@@ -246,6 +290,8 @@ const QUESTIONS = [
     topic: "Öffentlich-rechtlicher Rundfunk",
     question:
       "ARD, ZDF und Co. stehen in der Kritik. Sollte der öffentlich-rechtliche Rundfunk deutlich verkleinert, grundlegend reformiert oder in seiner jetzigen Form erhalten bleiben?",
+    statement:
+      "Der öffentlich-rechtliche Rundfunk sollte deutlich verkleinert und der Rundfunkbeitrag gesenkt werden.",
     infoFacts: [
       "Der Rundfunkbeitrag beträgt 18,36 Euro pro Monat pro Haushalt.",
       "ARD, ZDF und Deutschlandradio haben zusammen ein Budget von über 10 Mrd. Euro jährlich.",
@@ -257,6 +303,8 @@ const QUESTIONS = [
     topic: "Drogenpolitik",
     question:
       "War die Cannabis-Legalisierung richtig? Sollte Deutschland auch bei anderen Substanzen auf Entkriminalisierung setzen, oder braucht es eine härtere Linie?",
+    statement:
+      "Die Cannabis-Legalisierung war richtig und Deutschland sollte auch bei anderen Substanzen auf Entkriminalisierung statt Bestrafung setzen.",
     infoFacts: [
       "Seit April 2024 ist der Besitz von bis zu 25 Gramm Cannabis für Erwachsene straffrei.",
       "Alkohol verursacht in Deutschland jährlich geschätzte 57 Mrd. Euro Folgekosten.",
@@ -268,6 +316,8 @@ const QUESTIONS = [
     topic: "Datenschutz & Überwachung",
     question:
       "Wo liegt die Grenze zwischen Sicherheit und Privatsphäre? Sollte der Staat mehr Überwachungsbefugnisse bekommen oder ist der Datenschutz bereits zu stark eingeschränkt?",
+    statement:
+      "Der Schutz der Privatsphäre ist wichtiger als erweiterte Überwachungsbefugnisse für Sicherheitsbehörden.",
     infoFacts: [
       "Die Vorratsdatenspeicherung wurde vom EuGH in ihrer bisherigen Form für rechtswidrig erklärt.",
       "Gesichtserkennung im öffentlichen Raum ist in der EU umstritten — der AI Act reguliert sie teilweise.",
@@ -279,6 +329,8 @@ const QUESTIONS = [
     topic: "KI & Technologie",
     question:
       "Wie sollte Deutschland mit Künstlicher Intelligenz umgehen? Braucht es strenge Regulierung zum Schutz von Arbeitsplätzen und Grundrechten, oder hemmt das die Innovation?",
+    statement:
+      "Künstliche Intelligenz sollte streng reguliert werden, um Arbeitsplätze und Grundrechte zu schützen.",
     infoFacts: [
       "Der EU AI Act ist seit 2024 in Kraft und reguliert KI-Systeme nach Risikoklassen.",
       "Deutschland investiert bis 2025 rund 1,6 Mrd. Euro in die nationale KI-Strategie.",
@@ -290,6 +342,8 @@ const QUESTIONS = [
     topic: "Infrastruktur",
     question:
       "Brücken, Schienen und Straßen sind marode. Wer soll die dringend nötige Sanierung bezahlen — und wo sollte zuerst investiert werden?",
+    statement:
+      "Der Staat sollte massiv in die Sanierung von Brücken, Schienen und Straßen investieren — notfalls durch neue Schulden.",
     infoFacts: [
       "Rund 4.000 Autobahnbrücken in Deutschland gelten als sanierungsbedürftig.",
       "Die Deutsche Bahn investiert über 30 Mrd. Euro in die Generalsanierung ihres Streckennetzes.",
@@ -301,6 +355,8 @@ const QUESTIONS = [
     topic: "Arbeit & Löhne",
     question:
       "Mindestlohn weiter anheben, 4-Tage-Woche einführen, Recht auf Homeoffice gesetzlich verankern — welche Veränderungen in der Arbeitswelt sind sinnvoll?",
+    statement:
+      "Der Mindestlohn sollte deutlich erhöht und eine 4-Tage-Woche bei vollem Lohnausgleich eingeführt werden.",
     infoFacts: [
       "Der gesetzliche Mindestlohn liegt seit 2025 bei 12,82 Euro pro Stunde.",
       "Rund 25 % aller Beschäftigten in Deutschland arbeiten zumindest teilweise im Homeoffice.",
@@ -312,6 +368,8 @@ const QUESTIONS = [
     topic: "Demokratie & Vertrauen",
     question:
       "Das Vertrauen in die Politik sinkt. Braucht Deutschland mehr direkte Demokratie wie Volksabstimmungen, oder würde das die Gesellschaft weiter spalten?",
+    statement:
+      "Deutschland sollte verbindliche Volksabstimmungen auf Bundesebene einführen, um die Demokratie zu stärken.",
     infoFacts: [
       "Nur noch ca. 30 % der Deutschen vertrauen der Bundesregierung laut Infratest dimap.",
       "Auf Bundesebene gibt es bisher keine verbindlichen Volksabstimmungen.",
@@ -323,6 +381,8 @@ const QUESTIONS = [
     topic: "Extremismus & Gesellschaft",
     question:
       "Politischer Extremismus und gesellschaftliche Spaltung nehmen zu. Welche Maßnahmen sollte der Staat ergreifen — und wo beginnt die Einschränkung von Meinungsfreiheit?",
+    statement:
+      "Der Staat sollte härter gegen politischen Extremismus vorgehen, auch wenn das Einschränkungen der Meinungsfreiheit bedeutet.",
     infoFacts: [
       "Der Verfassungsschutz stuft die AfD in Teilen als gesichert rechtsextrem ein.",
       "Politisch motivierte Straftaten erreichten 2023 mit über 60.000 Fällen einen Höchststand.",
