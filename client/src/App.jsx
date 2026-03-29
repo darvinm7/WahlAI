@@ -12,6 +12,8 @@ export default function App() {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
   const [importances, setImportances] = useState({});
+  const [answerModes, setAnswerModes] = useState({});
+  const [stances, setStances] = useState({});
   const [results, setResults] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -22,6 +24,14 @@ export default function App() {
 
   const updateImportance = (val) => {
     setImportances((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+  };
+
+  const updateMode = (val) => {
+    setAnswerModes((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+  };
+
+  const updateStance = (val) => {
+    setStances((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
   };
 
   const goNext = () => {
@@ -36,15 +46,33 @@ export default function App() {
     if (currentQ > 0) setCurrentQ(currentQ - 1);
   };
 
+  const stanceLabel = (stance) => {
+    if (stance === "agree") return "Stimme zu";
+    if (stance === "neutral") return "Neutral";
+    if (stance === "disagree") return "Stimme nicht zu";
+    return "(keine Antwort)";
+  };
+
   const buildPrompt = () => {
     let prompt =
       "Hier sind die Antworten des Nutzers auf 30 politische Fragen:\n\n";
     QUESTIONS.forEach((q) => {
-      const answer = answers[q.id] || "(keine Antwort)";
+      const mode = answerModes[q.id] || "statement";
       const imp = importances[q.id] || 5;
       prompt += `--- Frage ${q.id}: ${q.topic} ---\n`;
       prompt += `Frage: ${q.question}\n`;
-      prompt += `Antwort des Nutzers: ${answer}\n`;
+
+      if (mode === "freetext") {
+        const answer = answers[q.id] || "(keine Antwort)";
+        prompt += `Antwortmodus: Freitext\n`;
+        prompt += `Antwort des Nutzers: ${answer}\n`;
+      } else {
+        const stance = stances[q.id] || "(keine Antwort)";
+        prompt += `Antwortmodus: Aussage bewerten\n`;
+        prompt += `Aussage: "${q.statement}"\n`;
+        prompt += `Bewertung des Nutzers: ${stanceLabel(stance)}\n`;
+      }
+
       prompt += `Wichtigkeit (1-10): ${imp}\n\n`;
     });
     prompt +=
@@ -87,6 +115,8 @@ export default function App() {
     setCurrentQ(0);
     setAnswers({});
     setImportances({});
+    setAnswerModes({});
+    setStances({});
     setResults(null);
     setError(null);
     setLoadingProgress(0);
@@ -105,8 +135,12 @@ export default function App() {
           total={QUESTIONS.length}
           answer={answers[QUESTIONS[currentQ].id]}
           importance={importances[QUESTIONS[currentQ].id]}
+          answerMode={answerModes[QUESTIONS[currentQ].id]}
+          stance={stances[QUESTIONS[currentQ].id]}
           onAnswer={updateAnswer}
           onImportance={updateImportance}
+          onModeChange={updateMode}
+          onStanceChange={updateStance}
           onNext={goNext}
           onBack={goBack}
         />

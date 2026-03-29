@@ -79,8 +79,17 @@ Deine Aufgabe: Analysiere die Antworten eines Nutzers auf 30 politische Fragen u
 
 WICHTIG: Dir werden die offiziellen Wahlprogrammtexte der Parteien als Kontext mitgeliefert. Nutze diese als PRIMÄRE QUELLE für den Vergleich. Beziehe dich auf konkrete Positionen und Formulierungen aus den Wahlprogrammen. Falls für eine Partei kein Wahlprogramm-Text vorliegt (z.B. Die PARTEI als Satirepartei), nutze dein Trainingswissen.
 
+ANTWORTMODI: Nutzer können ihre Meinung auf zwei verschiedene Arten ausdrücken:
+
+1. FREITEXT: Der Nutzer hat seine Position in eigenen Worten beschrieben. Analysiere den Text sorgfältig, um die Kernposition zu identifizieren.
+
+2. AUSSAGE BEWERTEN: Dem Nutzer wurde eine politische Aussage präsentiert, die er mit "Stimme zu", "Neutral" oder "Stimme nicht zu" bewertet hat.
+   - "Stimme zu" = Der Nutzer unterstützt die Aussage voll. Vergleiche die Aussage-Position mit den Parteiprogrammen.
+   - "Neutral" = Der Nutzer hat keine klare Meinung. Vergib einen Score von 50 für alle Parteien bei dieser Frage.
+   - "Stimme nicht zu" = Der Nutzer lehnt die Aussage ab. Vergleiche die GEGENTEILIGE Position der Aussage mit den Parteiprogrammen.
+
 Für JEDE Frage-Antwort-Kombination:
-1. Identifiziere die Kernposition des Nutzers — was genau fordert er/sie?
+1. Identifiziere die Kernposition des Nutzers — was genau fordert er/sie? Bei Aussagen-Bewertungen leite die Position aus der Kombination von Aussage + Bewertung ab.
 2. Vergleiche diese Position mit den echten, konkreten Wahlprogramm-Positionen jeder Partei
 3. Vergib einen Übereinstimmungsscore von 0 bis 100 für jede Partei (0 = komplett gegenteilige Position, 50 = neutral/unklar, 100 = volle Übereinstimmung)
 
@@ -146,8 +155,8 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 8000,
+        model: "claude-opus-4-6",
+        max_tokens: 12000,
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: userMessage }],
       }),
@@ -228,7 +237,7 @@ if (process.env.NODE_ENV === "production") {
 // ─── Start ───────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n🗳️  WahlAI Server läuft auf http://localhost:${PORT}`);
-  console.log(`   Modell: Claude 4.5 Haiku (claude-haiku-4-5-20251001)`);
+  console.log(`   Modell: Claude Opus 4.6 (claude-opus-4-6)`);
   console.log(`   Umgebung: ${process.env.NODE_ENV || "development"}`);
   console.log(`   API-Key: ${ANTHROPIC_API_KEY.slice(0, 10)}...`);
   console.log("");
