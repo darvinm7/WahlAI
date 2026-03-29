@@ -1,4 +1,4 @@
-// Spitzenkandidaten / Parteivorsitzende pro Region
+// Spitzenkandidaten / Parteivorsitzende pro Region (Stand März 2026)
 // Bilder lokal gehostet in /candidates/
 
 const CANDIDATES = {
@@ -10,37 +10,37 @@ const CANDIDATES = {
     },
     "SPD": {
       name: "Lars Klingbeil",
-      role: "SPD-Vorsitzender",
+      role: "SPD-Vorsitzender (Co-Vorsitz mit B\u00e4rbel Bas)",
       image: "/candidates/klingbeil.jpg",
     },
     "B\u00fcndnis 90/Die Gr\u00fcnen": {
-      name: "Robert Habeck",
-      role: "Spitzenkandidat, Bundeswirtschaftsminister",
-      image: "/candidates/habeck.jpg",
+      name: "Franziska Brantner",
+      role: "Gr\u00fcnen-Vorsitzende (Co-Vorsitz mit Felix Banaszak)",
+      image: "/candidates/brantner.jpg",
     },
     "FDP": {
-      name: "Christian Lindner",
+      name: "Christian D\u00fcrr",
       role: "FDP-Vorsitzender",
-      image: "/candidates/lindner.jpg",
+      image: "/candidates/duerr.jpg",
     },
     "AfD": {
       name: "Alice Weidel",
-      role: "AfD-Vorsitzende, Spitzenkandidatin",
+      role: "AfD-Vorsitzende (Co-Vorsitz mit Tino Chrupalla)",
       image: "/candidates/weidel.jpg",
     },
     "Die Linke": {
       name: "Jan van Aken",
-      role: "Die Linke-Vorsitzender",
+      role: "Die Linke-Vorsitzender (Co-Vorsitz mit Ines Schwerdtner)",
       image: "/candidates/vanaken.jpg",
     },
     "BSW": {
-      name: "Sahra Wagenknecht",
-      role: "BSW-Vorsitzende",
-      image: "/candidates/wagenknecht.jpg",
+      name: "Fabio De Masi",
+      role: "BSW-Vorsitzender (Co-Vorsitz mit Amira Mohamed Ali)",
+      image: "/candidates/demasi.jpg",
     },
     "Freie W\u00e4hler": {
       name: "Hubert Aiwanger",
-      role: "Freie W\u00e4hler-Vorsitzender",
+      role: "Freie W\u00e4hler-Bundesvorsitzender",
       image: "/candidates/aiwanger.jpg",
     },
     "Die PARTEI": {

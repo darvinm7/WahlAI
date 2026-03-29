@@ -57,15 +57,6 @@ export default function ResultsPage({ results, importances, region, onRestart })
         >
           WahlAI
         </span>
-        <span
-          style={{
-            color: "var(--text-dim)",
-            fontSize: 13,
-            marginLeft: 4,
-          }}
-        >
-          — Ergebnis
-        </span>
       </div>
 
       {/* Results Content */}
@@ -135,44 +126,6 @@ export default function ResultsPage({ results, importances, region, onRestart })
               Höchste Übereinstimmung
             </div>
 
-            {/* Candidate Photo */}
-            {(() => {
-              const candidate = getCandidate(region || "bundesweit", sorted[0]?.name);
-              if (!candidate) return null;
-              return (
-                <div style={{ marginBottom: 20 }}>
-                  <div
-                    style={{
-                      width: 100,
-                      height: 100,
-                      borderRadius: "50%",
-                      margin: "0 auto 12px",
-                      overflow: "hidden",
-                      border: `3px solid ${sorted[0]?.color === "#000" || sorted[0]?.color === "#000000" ? "var(--accent)" : sorted[0]?.color}`,
-                      boxShadow: `0 0 20px ${sorted[0]?.color}30`,
-                    }}
-                  >
-                    <img
-                      src={candidate.image}
-                      alt={candidate.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                      onError={(e) => { e.target.style.display = "none"; }}
-                    />
-                  </div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>
-                    {candidate.name}
-                  </div>
-                  <div style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 2 }}>
-                    {candidate.role}
-                  </div>
-                </div>
-              );
-            })()}
-
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}>
               <span
                 style={{
@@ -217,6 +170,44 @@ export default function ResultsPage({ results, importances, region, onRestart })
             >
               {sorted[0]?.reasoning}
             </p>
+
+            {/* Candidate Photo */}
+            {(() => {
+              const candidate = getCandidate(region || "bundesweit", sorted[0]?.name);
+              if (!candidate) return null;
+              return (
+                <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid var(--border)" }}>
+                  <div
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: "50%",
+                      margin: "0 auto 10px",
+                      overflow: "hidden",
+                      border: `3px solid ${sorted[0]?.color === "#000" || sorted[0]?.color === "#000000" ? "var(--accent)" : sorted[0]?.color}`,
+                      boxShadow: `0 0 20px ${sorted[0]?.color}30`,
+                    }}
+                  >
+                    <img
+                      src={candidate.image}
+                      alt={candidate.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => { e.target.style.display = "none"; }}
+                    />
+                  </div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>
+                    {candidate.name}
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 2 }}>
+                    {candidate.role}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           {/* Full Ranking */}
