@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Load .env from project root
-dotenv.config({ path: join(__dirname, "..", ".env") });
+dotenv.config({ path: join(__dirname, "..", ".env"), override: true });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,7 +26,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? process.env.ALLOWED_ORIGIN || true
-        : "http://localhost:5173",
+        : /^http:\/\/localhost:(5173|5174|5175)$/,
     methods: ["POST"],
   })
 );
@@ -142,10 +142,26 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
       `[${new Date().toISOString()}] Analyse gestartet (${answers.length} Zeichen)`
     );
 
-    // Build the user message with Wahlprogramm context
-    const userMessage = wahlprogrammContext
-      ? wahlprogrammContext + "\n\n" + answers
-      : answers;
+    // Build request with prompt caching for static content
+    // System prompt + Wahlprogramme are cached (identical every request)
+    // Only user answers change per request
+    const systemContent = [
+      {
+        type: "text",
+        text: SYSTEM_PROMPT,
+        cache_control: { type: "ephemeral" },
+      },
+    ];
+
+    const userContent = [];
+    if (wahlprogrammContext) {
+      userContent.push({
+        type: "text",
+        text: wahlprogrammContext,
+        cache_control: { type: "ephemeral" },
+      });
+    }
+    userContent.push({ type: "text", text: answers });
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -153,12 +169,13 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
         "Content-Type": "application/json",
         "x-api-key": ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
+        "anthropic-beta": "prompt-caching-2024-07-31",
       },
       body: JSON.stringify({
         model: "claude-opus-4-6",
         max_tokens: 12000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: userMessage }],
+        system: systemContent,
+        messages: [{ role: "user", content: userContent }],
       }),
     });
 
@@ -184,6 +201,17 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
     }
 
     const data = await response.json();
+
+    // Log cache performance
+    if (data.usage) {
+      const u = data.usage;
+      console.log(
+        `   Cache: ${u.cache_read_input_tokens || 0} Tokens aus Cache gelesen, ` +
+        `${u.cache_creation_input_tokens || 0} Tokens in Cache geschrieben, ` +
+        `${u.input_tokens || 0} Input-Tokens, ${u.output_tokens || 0} Output-Tokens`
+      );
+    }
+
     const text = data.content
       .map((block) => (block.type === "text" ? block.text : ""))
       .filter(Boolean)
