@@ -119,15 +119,16 @@ export default function LandingPage({ onStart }) {
             fontFamily: "'Syne', sans-serif",
             fontSize: "clamp(26px, 4vw, 46px)",
             fontWeight: 800,
-            lineHeight: 1.35,
+            lineHeight: 1.45,
             marginBottom: 24,
             letterSpacing: -1,
-            paddingBottom: 4,
+            paddingBottom: 6,
+            overflow: "visible",
           }}
         >
           KI-gest&uuml;tzte
           <br />
-          Wahlentscheidungshilfe
+          <span style={{ letterSpacing: -2.5 }}>Wahlentscheidungshilfe</span>
         </h1>
 
         <p
