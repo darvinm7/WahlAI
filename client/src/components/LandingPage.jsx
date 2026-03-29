@@ -125,7 +125,7 @@ export default function LandingPage({ onStart }) {
           }}
         >
           <div style={{ lineHeight: 1.3 }}>KI-gest&uuml;tzte</div>
-          <div style={{ lineHeight: 1.5, letterSpacing: -3, paddingBottom: 8 }}>Wahlentscheidungshilfe</div>
+          <div style={{ lineHeight: 1.3, letterSpacing: -3, marginBottom: 8 }}>Wahlentscheidungshilfe</div>
         </div>
 
         <p
