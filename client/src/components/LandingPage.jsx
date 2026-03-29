@@ -7,7 +7,7 @@ const PARTY_LOGOS = [
   { name: "FDP", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Logo_der_Freien_Demokraten.svg/200px-Logo_der_Freien_Demokraten.svg.png" },
   { name: "AfD", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/AfD_Logo_2021.svg/200px-AfD_Logo_2021.svg.png" },
   { name: "Linke", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Die_Linke_logo.svg/200px-Die_Linke_logo.svg.png" },
-  { name: "BSW", url: "https://upload.wikimedia.org/wikipedia/de/thumb/a/ad/B%C3%BCndnis_Sahra_Wagenknecht_2026_logo.svg/200px-B%C3%BCndnis_Sahra_Wagenknecht_2026_logo.svg.png" },
+  { name: "BSW", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/B%C3%BCndnis_Sahra_Wagenknecht_logo_2.svg/200px-B%C3%BCndnis_Sahra_Wagenknecht_logo_2.svg.png" },
   { name: "Freie W\u00e4hler", url: "https://upload.wikimedia.org/wikipedia/de/thumb/7/7e/FreieW%C3%A4hlerBundesvereinigungLogo.svg/200px-FreieW%C3%A4hlerBundesvereinigungLogo.svg.png" },
 ];
 
@@ -114,28 +114,19 @@ export default function LandingPage({ onStart }) {
           Bundestagswahl 2026
         </div>
 
-        <h1
+        <div
           style={{
             fontFamily: "'Syne', sans-serif",
-            fontSize: "clamp(36px, 7vw, 64px)",
+            fontSize: "clamp(26px, 4vw, 46px)",
             fontWeight: 800,
-            lineHeight: 1.1,
             marginBottom: 24,
-            letterSpacing: -1.5,
+            letterSpacing: -1,
+            textAlign: "center",
           }}
         >
-          KI-gest&uuml;tzte{" "}
-          <span
-            style={{
-              background: "var(--gradient-accent)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Wahlentscheidungs
-          </span>
-          hilfe
-        </h1>
+          <div style={{ lineHeight: 1.3 }}>KI-gest&uuml;tzte</div>
+          <div style={{ lineHeight: 1.3, letterSpacing: -3, marginBottom: 8 }}>Wahlentscheidungshilfe</div>
+        </div>
 
         <p
           style={{

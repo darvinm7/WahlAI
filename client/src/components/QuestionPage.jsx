@@ -337,6 +337,7 @@ export default function QuestionPage({
   onStanceChange,
   onNext,
   onBack,
+  onSkip,
 }) {
   const [anim, setAnim] = useState(false);
 
@@ -363,39 +364,31 @@ export default function QuestionPage({
       {/* Top Bar */}
       <div
         style={{
-          background: "var(--accent)",
-          padding: "12px 24px",
+          padding: "14px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          color: "#fff",
           flexShrink: 0,
+          borderBottom: "1px solid var(--border)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: "50%",
-              background: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 800,
-              fontSize: 13,
-              color: "var(--accent)",
-            }}
-          >
-            W
-          </div>
-          <span style={{ fontWeight: 700, fontSize: 16 }}>WahlAI</span>
-        </div>
+        <span
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 800,
+            fontSize: 18,
+            background: "var(--gradient-accent)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          WahlAI
+        </span>
         <span
           style={{
             fontSize: 14,
             fontWeight: 600,
-            color: "rgba(255,255,255,0.8)",
+            color: "var(--text-mid)",
           }}
         >
           Frage {index + 1} von {total}
@@ -555,25 +548,55 @@ export default function QuestionPage({
               Zurück
             </button>
 
-            <button
-              onClick={onNext}
-              disabled={!isValid}
-              style={{
-                fontWeight: 700,
-                fontSize: 15,
-                padding: "12px 40px",
-                background: isValid ? "var(--accent)" : "var(--bg-bar)",
-                color: isValid ? "#fff" : "var(--text-dim)",
-                border: "none",
-                borderRadius: 8,
-                cursor: isValid ? "pointer" : "not-allowed",
-                transition: "all 0.3s ease",
-                boxShadow: isValid ? "var(--shadow-md)" : "none",
-                fontFamily: "inherit",
-              }}
-            >
-              {index === total - 1 ? "Auswertung starten" : "Weiter"}
-            </button>
+            <div style={{ display: "flex", gap: 12 }}>
+              {onSkip && (
+                <button
+                  onClick={onSkip}
+                  style={{
+                    fontWeight: 600,
+                    fontSize: 14,
+                    padding: "12px 24px",
+                    background: "transparent",
+                    color: "var(--text-dim)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 8,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    fontFamily: "inherit",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = "var(--text-mid)";
+                    e.target.style.borderColor = "var(--text-dim)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = "var(--text-dim)";
+                    e.target.style.borderColor = "var(--border)";
+                  }}
+                >
+                  Überspringen
+                </button>
+              )}
+
+              <button
+                onClick={onNext}
+                disabled={!isValid}
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  padding: "12px 40px",
+                  background: isValid ? "var(--accent)" : "var(--bg-bar)",
+                  color: isValid ? "#fff" : "var(--text-dim)",
+                  border: "none",
+                  borderRadius: 8,
+                  cursor: isValid ? "pointer" : "not-allowed",
+                  transition: "all 0.3s ease",
+                  boxShadow: isValid ? "var(--shadow-md)" : "none",
+                  fontFamily: "inherit",
+                }}
+              >
+                {index === total - 1 ? "Auswertung starten" : "Weiter"}
+              </button>
+            </div>
           </div>
         </div>
       </div>

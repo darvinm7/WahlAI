@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import PARTIES from "../data/parties.js";
 import QUESTIONS from "../data/questions.js";
+import { getCandidate } from "../data/candidates.js";
 
-export default function ResultsPage({ results, importances, onRestart }) {
+export default function ResultsPage({ results, importances, region, onRestart }) {
   const [visible, setVisible] = useState(false);
   const [expandedParty, setExpandedParty] = useState(null);
   const [showTopics, setShowTopics] = useState(false);
@@ -35,41 +36,26 @@ export default function ResultsPage({ results, importances, onRestart }) {
       {/* Header Bar */}
       <div
         style={{
-          background: "var(--accent)",
           padding: "14px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
-          color: "#fff",
           flexShrink: 0,
+          borderBottom: "1px solid var(--border)",
         }}
       >
-        <div
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: "50%",
-            background: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: 800,
-            fontSize: 13,
-            color: "var(--accent)",
-          }}
-        >
-          W
-        </div>
-        <span style={{ fontWeight: 700, fontSize: 16 }}>WahlAI</span>
         <span
           style={{
-            color: "rgba(255,255,255,0.6)",
-            fontSize: 13,
-            marginLeft: 4,
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 800,
+            fontSize: 18,
+            background: "var(--gradient-accent)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
-          — Ergebnis
+          WahlAI
         </span>
       </div>
 
@@ -134,7 +120,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 letterSpacing: 2,
                 textTransform: "uppercase",
                 color: "var(--accent)",
-                marginBottom: 14,
+                marginBottom: 20,
               }}
             >
               Höchste Übereinstimmung
@@ -184,6 +170,45 @@ export default function ResultsPage({ results, importances, onRestart }) {
             >
               {sorted[0]?.reasoning}
             </p>
+
+            {/* Candidate Photo — only for bundesweit */}
+            {(() => {
+              if (region && region !== "bundesweit") return null;
+              const candidate = getCandidate("bundesweit", sorted[0]?.name);
+              if (!candidate) return null;
+              return (
+                <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid var(--border)" }}>
+                  <div
+                    style={{
+                      width: 90,
+                      height: 90,
+                      borderRadius: "50%",
+                      margin: "0 auto 10px",
+                      overflow: "hidden",
+                      border: `3px solid ${sorted[0]?.color === "#000" || sorted[0]?.color === "#000000" ? "var(--accent)" : sorted[0]?.color}`,
+                      boxShadow: `0 0 20px ${sorted[0]?.color}30`,
+                    }}
+                  >
+                    <img
+                      src={candidate.image}
+                      alt={candidate.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => { e.target.style.display = "none"; }}
+                    />
+                  </div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>
+                    {candidate.name}
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 2 }}>
+                    {candidate.role}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           {/* Full Ranking */}

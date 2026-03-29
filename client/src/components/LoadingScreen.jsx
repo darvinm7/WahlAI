@@ -196,32 +196,26 @@ export default function LoadingScreen({ progress }) {
       {/* Header Bar */}
       <div
         style={{
-          background: "var(--accent)",
           padding: "14px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
-          color: "#fff",
+          borderBottom: "1px solid var(--border)",
         }}
       >
-        <div
+        <span
           style={{
-            width: 28,
-            height: 28,
-            borderRadius: "50%",
-            background: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: 13,
-            color: "var(--accent)",
+            fontSize: 18,
+            background: "var(--gradient-accent)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
           }}
         >
-          W
-        </div>
-        <span style={{ fontWeight: 700, fontSize: 16 }}>WahlAI</span>
+          WahlAI
+        </span>
       </div>
 
       {/* Loading Content */}
