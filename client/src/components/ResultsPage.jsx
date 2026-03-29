@@ -478,7 +478,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 margin: 0,
               }}
             >
-              <strong>Hinweis:</strong> Diese Auswertung wurde von einer KI (Claude 4.5 Haiku)
+              <strong>Hinweis:</strong> Diese Auswertung wurde von einer KI (Claude Opus 4.6)
               erstellt und dient ausschließlich als Orientierungshilfe. Die Analyse basiert
               auf dem Vergleich deiner Antworten mit den offiziellen Wahlprogrammen der Parteien.
               Für eine fundierte Wahlentscheidung empfehlen wir, die Wahlprogramme selbst zu

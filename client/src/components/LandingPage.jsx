@@ -170,7 +170,7 @@ export default function LandingPage({ onStart }) {
             {
               icon: "🤖",
               title: "KI-Analyse",
-              desc: "Claude 4.5 Haiku analysiert deine Positionen tiefgehend und differenziert",
+              desc: "Claude Opus 4.6 analysiert deine Positionen tiefgehend und differenziert",
               color: "var(--wom-orange)",
             },
           ].map((item, i) => (

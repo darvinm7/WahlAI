@@ -10,9 +10,9 @@ WahlAI ist eine Web-App, die deine politischen Positionen mit den Wahlprogrammen
 ## ✨ Features
 
 - **30 politische Fragen** zu aktuellen Themen (Migration, Klima, Wirtschaft, Rente, Ukraine, KI, …)
-- **Freitext-Antworten** statt vorgegebener Optionen — du formulierst deine Meinung selbst
+- **Zwei Antwortmodi** — bewerte Aussagen mit "Stimme zu / Neutral / Stimme nicht zu" oder formuliere deine Meinung als Freitext
 - **Individuelle Gewichtung** (1–10) pro Frage — Themen die dir wichtiger sind zählen stärker
-- **KI-Analyse** via Claude Sonnet 4 vergleicht deine Antworten mit 9 Wahlprogrammen
+- **KI-Analyse** via Claude Opus 4.6 vergleicht deine Antworten mit 9 Wahlprogrammen
 - **Detailliertes Ranking** aller Parteien mit Prozent-Score und Begründung
 - **Themen-Aufschlüsselung** zeigt dir pro Frage, welche Partei am besten passt
 - **Dark/Light Mode** — passt sich automatisch deinem System an
@@ -43,7 +43,7 @@ wahlai/
 1. Der Nutzer beantwortet 30 Fragen im Browser (React Frontend)
 2. Das Frontend sendet die Antworten an das Express-Backend (`/api/analyze`)
 3. Das Backend fügt den sicheren API-Key hinzu und leitet die Anfrage an die Anthropic API weiter
-4. Claude Sonnet 4.6 analysiert die Antworten und vergleicht sie mit den Wahlprogrammen
+4. Claude Opus 4.6 analysiert die Antworten und vergleicht sie mit den Wahlprogrammen
 5. Das Ergebnis wird als JSON zurückgegeben und im Frontend als Ranking dargestellt
 
 Der API-Key verlässt **niemals** den Server und ist **nicht** im Frontend-Code enthalten.
@@ -139,7 +139,7 @@ NODE_ENV=production npm start
 
 ## 💰 Kosten
 
-Die App nutzt die **Anthropic API** (Claude Sonnet 4). Jede Auswertung kostet ca. **$0.05 – $0.10**, abhängig von der Länge der Antworten. Das Backend hat ein eingebautes **Rate Limit** von 10 Auswertungen pro IP pro Stunde.
+Die App nutzt die **Anthropic API** (Claude Opus 4.6) mit Prompt Caching. Jede Auswertung kostet ca. **$0.40 – $0.50** (dank Caching), abhängig von der Länge der Antworten. Das Backend hat ein eingebautes **Rate Limit** von 10 Auswertungen pro IP pro Stunde.
 
 ---
 
@@ -159,7 +159,7 @@ Die App nutzt die **Anthropic API** (Claude Sonnet 4). Jede Auswertung kostet ca
 | ---------- | ---------------------- |
 | Frontend   | React 18, Vite 5       |
 | Backend    | Node.js, Express       |
-| KI-Modell  | Claude Sonnet 4        |
+| KI-Modell  | Claude Opus 4.6        |
 | Styling    | CSS Variables, Custom  |
 | Fonts      | Syne, Source Serif 4, DM Mono |
 
