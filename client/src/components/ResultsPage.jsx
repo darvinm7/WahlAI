@@ -35,7 +35,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
       {/* Header Bar */}
       <div
         style={{
-          background: "var(--wom-blue)",
+          background: "var(--accent)",
           padding: "14px 24px",
           display: "flex",
           alignItems: "center",
@@ -56,7 +56,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
             justifyContent: "center",
             fontWeight: 800,
             fontSize: 13,
-            color: "var(--wom-blue)",
+            color: "var(--accent)",
           }}
         >
           W
@@ -133,7 +133,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 fontWeight: 700,
                 letterSpacing: 2,
                 textTransform: "uppercase",
-                color: "var(--wom-blue)",
+                color: "var(--accent)",
                 marginBottom: 14,
               }}
             >
@@ -241,7 +241,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                     style={{
                       fontSize: 14,
                       fontWeight: 800,
-                      color: i === 0 ? "var(--wom-blue)" : "var(--text-dim)",
+                      color: i === 0 ? "var(--accent)" : "var(--text-dim)",
                       minWidth: 28,
                     }}
                   >
@@ -389,7 +389,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                     const topParty = topEntries[0];
                     const topPartyColor =
                       PARTIES.find((p) => p.name === topParty?.[0])?.color ||
-                      "var(--wom-blue)";
+                      "var(--accent)";
 
                     return (
                       <div
@@ -422,7 +422,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                                 fontWeight: 700,
                                 letterSpacing: 0.5,
                                 textTransform: "uppercase",
-                                color: "var(--wom-blue)",
+                                color: "var(--accent)",
                               }}
                             >
                               {topic.topic}
@@ -494,7 +494,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 fontWeight: 700,
                 fontSize: 16,
                 padding: "14px 48px",
-                background: "var(--wom-blue)",
+                background: "var(--accent)",
                 color: "#fff",
                 border: "none",
                 borderRadius: 8,
@@ -508,7 +508,7 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 e.target.style.transform = "translateY(-1px)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = "var(--wom-blue)";
+                e.target.style.background = "var(--accent)";
                 e.target.style.transform = "none";
               }}
             >
