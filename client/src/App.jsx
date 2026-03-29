@@ -217,6 +217,7 @@ export default function App() {
         <ResultsPage
           results={results}
           importances={importances}
+          region={region}
           onRestart={restart}
         />
       )}

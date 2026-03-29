@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import PARTIES from "../data/parties.js";
 import QUESTIONS from "../data/questions.js";
+import { getCandidate } from "../data/candidates.js";
 
-export default function ResultsPage({ results, importances, onRestart }) {
+export default function ResultsPage({ results, importances, region, onRestart }) {
   const [visible, setVisible] = useState(false);
   const [expandedParty, setExpandedParty] = useState(null);
   const [showTopics, setShowTopics] = useState(false);
@@ -128,11 +129,49 @@ export default function ResultsPage({ results, importances, onRestart }) {
                 letterSpacing: 2,
                 textTransform: "uppercase",
                 color: "var(--accent)",
-                marginBottom: 14,
+                marginBottom: 20,
               }}
             >
               Höchste Übereinstimmung
             </div>
+
+            {/* Candidate Photo */}
+            {(() => {
+              const candidate = getCandidate(region || "bundesweit", sorted[0]?.name);
+              if (!candidate) return null;
+              return (
+                <div style={{ marginBottom: 20 }}>
+                  <div
+                    style={{
+                      width: 100,
+                      height: 100,
+                      borderRadius: "50%",
+                      margin: "0 auto 12px",
+                      overflow: "hidden",
+                      border: `3px solid ${sorted[0]?.color === "#000" || sorted[0]?.color === "#000000" ? "var(--accent)" : sorted[0]?.color}`,
+                      boxShadow: `0 0 20px ${sorted[0]?.color}30`,
+                    }}
+                  >
+                    <img
+                      src={candidate.image}
+                      alt={candidate.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => { e.target.style.display = "none"; }}
+                    />
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>
+                    {candidate.name}
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--text-dim)", marginTop: 2 }}>
+                    {candidate.role}
+                  </div>
+                </div>
+              );
+            })()}
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 12 }}>
               <span
