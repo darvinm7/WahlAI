@@ -14,6 +14,7 @@ export default function App() {
   const [importances, setImportances] = useState({});
   const [answerModes, setAnswerModes] = useState({});
   const [stances, setStances] = useState({});
+  const [skipped, setSkipped] = useState({});
   const [results, setResults] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(null);
@@ -35,6 +36,8 @@ export default function App() {
   };
 
   const goNext = () => {
+    // Unskip if user answered after previously skipping
+    setSkipped((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: false }));
     if (currentQ < QUESTIONS.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
@@ -46,6 +49,15 @@ export default function App() {
     if (currentQ > 0) setCurrentQ(currentQ - 1);
   };
 
+  const skipQuestion = () => {
+    setSkipped((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: true }));
+    if (currentQ < QUESTIONS.length - 1) {
+      setCurrentQ(currentQ + 1);
+    } else {
+      runAnalysis();
+    }
+  };
+
   const stanceLabel = (stance) => {
     if (stance === "agree") return "Stimme zu";
     if (stance === "neutral") return "Neutral";
@@ -54,9 +66,10 @@ export default function App() {
   };
 
   const buildPrompt = () => {
+    const answeredQuestions = QUESTIONS.filter((q) => !skipped[q.id]);
     let prompt =
-      "Hier sind die Antworten des Nutzers auf 30 politische Fragen:\n\n";
-    QUESTIONS.forEach((q) => {
+      `Hier sind die Antworten des Nutzers auf ${answeredQuestions.length} politische Fragen (${QUESTIONS.length - answeredQuestions.length} Fragen wurden übersprungen und sollen NICHT in die Bewertung einfließen):\n\n`;
+    answeredQuestions.forEach((q) => {
       const mode = answerModes[q.id] || "statement";
       const imp = importances[q.id] || 5;
       prompt += `--- Frage ${q.id}: ${q.topic} ---\n`;
@@ -76,7 +89,7 @@ export default function App() {
       prompt += `Wichtigkeit (1-10): ${imp}\n\n`;
     });
     prompt +=
-      "\nAnalysiere alle Antworten gründlich und erstelle die gewichtete Auswertung als JSON. Beachte die Gewichtung: Eine Frage mit Wichtigkeit 10 soll 10x stärker in die Gesamtwertung einfließen als eine mit Wichtigkeit 1.";
+      "\nAnalysiere alle Antworten gründlich und erstelle die gewichtete Auswertung als JSON. Beachte die Gewichtung: Eine Frage mit Wichtigkeit 10 soll 10x stärker in die Gesamtwertung einfließen als eine mit Wichtigkeit 1. Übersprungene Fragen werden komplett ignoriert.";
     return prompt;
   };
 
@@ -117,6 +130,7 @@ export default function App() {
     setImportances({});
     setAnswerModes({});
     setStances({});
+    setSkipped({});
     setResults(null);
     setError(null);
     setLoadingProgress(0);
@@ -143,6 +157,7 @@ export default function App() {
           onStanceChange={updateStance}
           onNext={goNext}
           onBack={goBack}
+          onSkip={skipQuestion}
         />
       )}
 

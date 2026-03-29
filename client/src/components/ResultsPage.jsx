@@ -35,36 +35,30 @@ export default function ResultsPage({ results, importances, onRestart }) {
       {/* Header Bar */}
       <div
         style={{
-          background: "var(--accent)",
           padding: "14px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
-          color: "#fff",
           flexShrink: 0,
+          borderBottom: "1px solid var(--border)",
         }}
       >
-        <div
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: "50%",
-            background: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: 800,
-            fontSize: 13,
-            color: "var(--accent)",
-          }}
-        >
-          W
-        </div>
-        <span style={{ fontWeight: 700, fontSize: 16 }}>WahlAI</span>
         <span
           style={{
-            color: "rgba(255,255,255,0.6)",
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 800,
+            fontSize: 18,
+            background: "var(--gradient-accent)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          WahlAI
+        </span>
+        <span
+          style={{
+            color: "var(--text-dim)",
             fontSize: 13,
             marginLeft: 4,
           }}
