@@ -114,22 +114,19 @@ export default function LandingPage({ onStart }) {
           Bundestagswahl 2026
         </div>
 
-        <h1
+        <div
           style={{
             fontFamily: "'Syne', sans-serif",
             fontSize: "clamp(26px, 4vw, 46px)",
             fontWeight: 800,
-            lineHeight: 1.45,
             marginBottom: 24,
             letterSpacing: -1,
-            paddingBottom: 6,
-            overflow: "visible",
+            textAlign: "center",
           }}
         >
-          KI-gest&uuml;tzte
-          <br />
-          <span style={{ letterSpacing: -2.5 }}>Wahlentscheidungshilfe</span>
-        </h1>
+          <div style={{ lineHeight: 1.3 }}>KI-gest&uuml;tzte</div>
+          <div style={{ lineHeight: 1.5, letterSpacing: -3, paddingBottom: 8 }}>Wahlentscheidungshilfe</div>
+        </div>
 
         <p
           style={{
