@@ -171,9 +171,10 @@ export default function ResultsPage({ results, importances, region, onRestart })
               {sorted[0]?.reasoning}
             </p>
 
-            {/* Candidate Photo */}
+            {/* Candidate Photo — only for bundesweit */}
             {(() => {
-              const candidate = getCandidate(region || "bundesweit", sorted[0]?.name);
+              if (region && region !== "bundesweit") return null;
+              const candidate = getCandidate("bundesweit", sorted[0]?.name);
               if (!candidate) return null;
               return (
                 <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid var(--border)" }}>

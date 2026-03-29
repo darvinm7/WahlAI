@@ -117,14 +117,17 @@ export default function LandingPage({ onStart }) {
         <h1
           style={{
             fontFamily: "'Syne', sans-serif",
-            fontSize: "clamp(28px, 4.5vw, 50px)",
+            fontSize: "clamp(26px, 4vw, 46px)",
             fontWeight: 800,
-            lineHeight: 1.2,
+            lineHeight: 1.35,
             marginBottom: 24,
-            letterSpacing: -3,
+            letterSpacing: -1,
+            paddingBottom: 4,
           }}
         >
-          KI-gest&uuml;tzte Wahlentscheidungshilfe
+          KI-gest&uuml;tzte
+          <br />
+          Wahlentscheidungshilfe
         </h1>
 
         <p
