@@ -16,7 +16,7 @@ function ProgressBar({ current, total }) {
           style={{
             width: `${pct}%`,
             height: "100%",
-            background: "var(--wom-blue)",
+            background: "var(--accent)",
             transition: "width 0.5s cubic-bezier(.4,0,.2,1)",
           }}
         />
@@ -51,7 +51,7 @@ function ImportanceSlider({ value, onChange }) {
             fontWeight: 800,
             color:
               value >= 7
-                ? "var(--wom-blue)"
+                ? "var(--accent)"
                 : value >= 4
                 ? "var(--text-mid)"
                 : "var(--text-dim)",
@@ -214,7 +214,7 @@ function ModeToggle({ mode, onModeChange }) {
           fontSize: 13,
           fontWeight: mode === "statement" ? 700 : 500,
           color: mode === "statement" ? "#fff" : "var(--text-mid)",
-          background: mode === "statement" ? "var(--wom-blue)" : "transparent",
+          background: mode === "statement" ? "var(--accent)" : "transparent",
           border: "none",
           borderRadius: 6,
           cursor: "pointer",
@@ -232,7 +232,7 @@ function ModeToggle({ mode, onModeChange }) {
           fontSize: 13,
           fontWeight: mode === "freetext" ? 700 : 500,
           color: mode === "freetext" ? "#fff" : "var(--text-mid)",
-          background: mode === "freetext" ? "var(--wom-blue)" : "transparent",
+          background: mode === "freetext" ? "var(--accent)" : "transparent",
           border: "none",
           borderRadius: 6,
           cursor: "pointer",
@@ -363,7 +363,7 @@ export default function QuestionPage({
       {/* Top Bar */}
       <div
         style={{
-          background: "var(--wom-blue)",
+          background: "var(--accent)",
           padding: "12px 24px",
           display: "flex",
           alignItems: "center",
@@ -384,7 +384,7 @@ export default function QuestionPage({
               justifyContent: "center",
               fontWeight: 800,
               fontSize: 13,
-              color: "var(--wom-blue)",
+              color: "var(--accent)",
             }}
           >
             W
@@ -428,7 +428,7 @@ export default function QuestionPage({
               fontWeight: 700,
               letterSpacing: 0.5,
               textTransform: "uppercase",
-              color: "var(--wom-blue)",
+              color: "var(--accent)",
               background: "var(--accent-light)",
               padding: "6px 14px",
               borderRadius: 6,
@@ -562,7 +562,7 @@ export default function QuestionPage({
                 fontWeight: 700,
                 fontSize: 15,
                 padding: "12px 40px",
-                background: isValid ? "var(--wom-blue)" : "var(--bg-bar)",
+                background: isValid ? "var(--accent)" : "var(--bg-bar)",
                 color: isValid ? "#fff" : "var(--text-dim)",
                 border: "none",
                 borderRadius: 8,

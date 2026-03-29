@@ -10,7 +10,7 @@ export default function ErrorScreen({ error, onRetry, onRestart }) {
       {/* Header Bar */}
       <div
         style={{
-          background: "var(--wom-blue)",
+          background: "var(--accent)",
           padding: "14px 24px",
           display: "flex",
           alignItems: "center",
@@ -30,7 +30,7 @@ export default function ErrorScreen({ error, onRetry, onRestart }) {
             justifyContent: "center",
             fontWeight: 800,
             fontSize: 13,
-            color: "var(--wom-blue)",
+            color: "var(--accent)",
           }}
         >
           W
@@ -128,7 +128,7 @@ export default function ErrorScreen({ error, onRetry, onRestart }) {
                 fontWeight: 700,
                 fontSize: 14,
                 padding: "12px 32px",
-                background: "var(--wom-blue)",
+                background: "var(--accent)",
                 color: "#fff",
                 border: "none",
                 borderRadius: 8,
