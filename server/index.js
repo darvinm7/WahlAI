@@ -8,6 +8,11 @@ import {
   loadWahlprogramme,
   buildWahlprogrammContext,
 } from "./wahlprogramme.js";
+import {
+  loadLandeswahlprogramme,
+  buildLandesContext,
+  getRegionName,
+} from "./landeswahlprogramme.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -124,9 +129,10 @@ WICHTIG: Antworte NUR mit einem validen JSON-Objekt im folgenden Format. KEIN Ma
 // ─── Analysis endpoint ───────────────────────────────────
 app.post("/api/analyze", analysisLimiter, async (req, res) => {
   try {
-    const { answers } = req.body;
+    const { answers, region } = req.body;
+    const regionId = region || "bundesweit";
 
-    if (!answers || typeof answers !== "string" || answers.length < 100) {
+    if (!answers || typeof answers !== "string" || answers.length < 50) {
       return res.status(400).json({
         error: "Ungültige Anfrage. Bitte beantworte alle Fragen.",
       });
@@ -138,22 +144,29 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
       });
     }
 
+    const regionName = getRegionName(regionId);
     console.log(
-      `[${new Date().toISOString()}] Analyse gestartet (${answers.length} Zeichen)`
+      `[${new Date().toISOString()}] Analyse gestartet — Region: ${regionName || "Bundesweit"} (${answers.length} Zeichen)`
     );
 
+    // Build system prompt — add region context if not bundesweit
+    let systemPromptText = SYSTEM_PROMPT;
+    if (regionId !== "bundesweit" && regionName) {
+      systemPromptText += `\n\nWICHTIG — REGIONALE ANALYSE: Der Nutzer hat "${regionName}" als Region gewählt. Die Fragen enthalten sowohl bundesweite als auch landesspezifische Themen für ${regionName}. Berücksichtige bei der Analyse SOWOHL die Bundespositionen als auch die Landespositionen der Parteien in ${regionName}. Für landesspezifische Fragen sollen die Positionen der Parteien auf Landesebene stärker gewichtet werden als die Bundespositionen.`;
+    }
+
     // Build request with prompt caching for static content
-    // System prompt + Wahlprogramme are cached (identical every request)
-    // Only user answers change per request
     const systemContent = [
       {
         type: "text",
-        text: SYSTEM_PROMPT,
+        text: systemPromptText,
         cache_control: { type: "ephemeral" },
       },
     ];
 
     const userContent = [];
+
+    // Block 1 (cached): Bundeswahlprogramme
     if (wahlprogrammContext) {
       userContent.push({
         type: "text",
@@ -161,6 +174,25 @@ app.post("/api/analyze", analysisLimiter, async (req, res) => {
         cache_control: { type: "ephemeral" },
       });
     }
+
+    // Block 2 (cached per region): Landeswahlprogramme
+    if (regionId !== "bundesweit" && regionName) {
+      try {
+        const landesTexts = await loadLandeswahlprogramme(regionId);
+        const landesContext = buildLandesContext(regionId, landesTexts);
+        if (landesContext) {
+          userContent.push({
+            type: "text",
+            text: landesContext,
+            cache_control: { type: "ephemeral" },
+          });
+        }
+      } catch (err) {
+        console.error(`Landeswahlprogramme für ${regionName} fehlgeschlagen:`, err.message);
+      }
+    }
+
+    // Block 3 (variable): User answers
     userContent.push({ type: "text", text: answers });
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {

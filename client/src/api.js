@@ -1,11 +1,11 @@
 const API_BASE =
   import.meta.env.MODE === "production" ? "" : "http://localhost:3001";
 
-export async function analyzeAnswers(answersText) {
+export async function analyzeAnswers(answersText, region = "bundesweit") {
   const response = await fetch(`${API_BASE}/api/analyze`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ answers: answersText }),
+    body: JSON.stringify({ answers: answersText, region }),
   });
 
   if (!response.ok) {

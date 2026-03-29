@@ -1,14 +1,27 @@
-import { useState } from "react";
-import QUESTIONS from "./data/questions.js";
+import { useState, useMemo } from "react";
+import FEDERAL_QUESTIONS from "./data/questions.js";
 import { analyzeAnswers } from "./api.js";
 import LandingPage from "./components/LandingPage.jsx";
+import RegionSelectPage from "./components/RegionSelectPage.jsx";
 import QuestionPage from "./components/QuestionPage.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
 import ResultsPage from "./components/ResultsPage.jsx";
 import ErrorScreen from "./components/ErrorScreen.jsx";
 
+// Lazy-load regional questions only when needed
+let REGIONAL_QUESTIONS = null;
+async function getRegionalQuestions() {
+  if (!REGIONAL_QUESTIONS) {
+    const mod = await import("./data/questions-regional.js");
+    REGIONAL_QUESTIONS = mod.default;
+  }
+  return REGIONAL_QUESTIONS;
+}
+
 export default function App() {
   const [page, setPage] = useState("landing");
+  const [region, setRegion] = useState("bundesweit");
+  const [questions, setQuestions] = useState(FEDERAL_QUESTIONS);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
   const [importances, setImportances] = useState({});
@@ -19,26 +32,49 @@ export default function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(null);
 
+  const selectRegion = async (regionId) => {
+    setRegion(regionId);
+
+    if (regionId === "bundesweit") {
+      setQuestions(FEDERAL_QUESTIONS);
+    } else {
+      const regional = await getRegionalQuestions();
+      const stateData = regional[regionId];
+      if (stateData) {
+        // Combine federal questions (by ID) + state-specific questions
+        const federalSubset = stateData.federalQuestionIds
+          .map((id) => FEDERAL_QUESTIONS.find((q) => q.id === id))
+          .filter(Boolean);
+        const combined = [...federalSubset, ...stateData.stateQuestions];
+        setQuestions(combined);
+      } else {
+        // Fallback to federal questions if no regional data
+        setQuestions(FEDERAL_QUESTIONS);
+      }
+    }
+
+    setPage("questions");
+  };
+
   const updateAnswer = (val) => {
-    setAnswers((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+    setAnswers((prev) => ({ ...prev, [questions[currentQ].id]: val }));
   };
 
   const updateImportance = (val) => {
-    setImportances((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+    setImportances((prev) => ({ ...prev, [questions[currentQ].id]: val }));
   };
 
   const updateMode = (val) => {
-    setAnswerModes((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+    setAnswerModes((prev) => ({ ...prev, [questions[currentQ].id]: val }));
   };
 
   const updateStance = (val) => {
-    setStances((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: val }));
+    setStances((prev) => ({ ...prev, [questions[currentQ].id]: val }));
   };
 
   const goNext = () => {
-    // Unskip if user answered after previously skipping
-    setSkipped((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: false }));
-    if (currentQ < QUESTIONS.length - 1) {
+    setSkipped((prev) => ({ ...prev, [questions[currentQ].id]: false }));
+    if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
       runAnalysis();
@@ -50,8 +86,8 @@ export default function App() {
   };
 
   const skipQuestion = () => {
-    setSkipped((prev) => ({ ...prev, [QUESTIONS[currentQ].id]: true }));
-    if (currentQ < QUESTIONS.length - 1) {
+    setSkipped((prev) => ({ ...prev, [questions[currentQ].id]: true }));
+    if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1);
     } else {
       runAnalysis();
@@ -66,9 +102,16 @@ export default function App() {
   };
 
   const buildPrompt = () => {
-    const answeredQuestions = QUESTIONS.filter((q) => !skipped[q.id]);
-    let prompt =
-      `Hier sind die Antworten des Nutzers auf ${answeredQuestions.length} politische Fragen (${QUESTIONS.length - answeredQuestions.length} Fragen wurden übersprungen und sollen NICHT in die Bewertung einfließen):\n\n`;
+    const answeredQuestions = questions.filter((q) => !skipped[q.id]);
+    const regionLabel =
+      region === "bundesweit" ? "bundesweit" : `regional (${region})`;
+
+    let prompt = `Hier sind die Antworten des Nutzers auf ${answeredQuestions.length} politische Fragen (Modus: ${regionLabel}):\n`;
+    if (questions.length - answeredQuestions.length > 0) {
+      prompt += `(${questions.length - answeredQuestions.length} Fragen wurden \u00fcbersprungen und sollen NICHT in die Bewertung einflie\u00dfen)\n`;
+    }
+    prompt += "\n";
+
     answeredQuestions.forEach((q) => {
       const mode = answerModes[q.id] || "statement";
       const imp = importances[q.id] || 5;
@@ -88,8 +131,9 @@ export default function App() {
 
       prompt += `Wichtigkeit (1-10): ${imp}\n\n`;
     });
+
     prompt +=
-      "\nAnalysiere alle Antworten gründlich und erstelle die gewichtete Auswertung als JSON. Beachte die Gewichtung: Eine Frage mit Wichtigkeit 10 soll 10x stärker in die Gesamtwertung einfließen als eine mit Wichtigkeit 1. Übersprungene Fragen werden komplett ignoriert.";
+      "\nAnalysiere alle Antworten gr\u00fcndlich und erstelle die gewichtete Auswertung als JSON. Beachte die Gewichtung: Eine Frage mit Wichtigkeit 10 soll 10x st\u00e4rker in die Gesamtwertung einflie\u00dfen als eine mit Wichtigkeit 1. \u00dcbersprungene Fragen werden komplett ignoriert.";
     return prompt;
   };
 
@@ -109,7 +153,7 @@ export default function App() {
     }, 700);
 
     try {
-      const parsed = await analyzeAnswers(buildPrompt());
+      const parsed = await analyzeAnswers(buildPrompt(), region);
       clearInterval(progressInterval);
       setLoadingProgress(100);
       setTimeout(() => {
@@ -125,6 +169,8 @@ export default function App() {
 
   const restart = () => {
     setPage("landing");
+    setRegion("bundesweit");
+    setQuestions(FEDERAL_QUESTIONS);
     setCurrentQ(0);
     setAnswers({});
     setImportances({});
@@ -139,18 +185,22 @@ export default function App() {
   return (
     <>
       {page === "landing" && (
-        <LandingPage onStart={() => setPage("questions")} />
+        <LandingPage onStart={() => setPage("regionSelect")} />
+      )}
+
+      {page === "regionSelect" && (
+        <RegionSelectPage onSelect={selectRegion} />
       )}
 
       {page === "questions" && (
         <QuestionPage
-          question={QUESTIONS[currentQ]}
+          question={questions[currentQ]}
           index={currentQ}
-          total={QUESTIONS.length}
-          answer={answers[QUESTIONS[currentQ].id]}
-          importance={importances[QUESTIONS[currentQ].id]}
-          answerMode={answerModes[QUESTIONS[currentQ].id]}
-          stance={stances[QUESTIONS[currentQ].id]}
+          total={questions.length}
+          answer={answers[questions[currentQ].id]}
+          importance={importances[questions[currentQ].id]}
+          answerMode={answerModes[questions[currentQ].id]}
+          stance={stances[questions[currentQ].id]}
           onAnswer={updateAnswer}
           onImportance={updateImportance}
           onModeChange={updateMode}
